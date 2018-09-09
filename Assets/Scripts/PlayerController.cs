@@ -23,12 +23,15 @@ public class PlayerController : MonoBehaviour {
         Vector2 movement = new Vector2(moveHorizontal, moveVertical);
         rb2d.velocity = movement*speed;
 
-        if(checkWinStatus()){
+        if(ReadMashedKeys(successCount)){
             Debug.Log("You Win!");
+        }
+        else if(Manager.Instance.counter >= 10){
+            Debug.Log("You Lose!");
         }
     }
 
-    bool checkWinStatus() {
+    bool ReadMashedKeys(int targetPresses) {
         if (Input.GetKeyDown(KeyCode.A) && lastPressed != KeyCode.A) {
             aCount++;
             Debug.Log("A " + aCount);
@@ -40,7 +43,7 @@ public class PlayerController : MonoBehaviour {
             lastPressed = KeyCode.D;
         }
 
-        if(aCount + dCount >= successCount){
+        if(aCount + dCount >= targetPresses){
             return true;
         }
         return false;
